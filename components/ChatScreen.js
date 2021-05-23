@@ -13,6 +13,7 @@ import firebase from "firebase";
 import { useState, useRef } from "react";
 import getRecipientEmail from "../utils/getRecipientEmail";
 import TimeAgo from "timeago-react";
+import SendIcon from "@material-ui/icons/Send";
 
 function ChatScreen({ chat, messages }) {
   const [user] = useAuthState(auth);
@@ -123,9 +124,9 @@ function ChatScreen({ chat, messages }) {
       <InputContainer>
         <InsertEmoticonIcon />
         <Input value={input} onChange={(e) => setInput(e.target.value)} />
-        <button hidden disabled={!input} type="submit" onClick={sendMessage}>
-          Send Message
-        </button>
+        <ButtonSend disabled={!input} type="submit" onClick={sendMessage}>
+          <SendIcon />
+        </ButtonSend>
         <MicIcon />
       </InputContainer>
     </Container>
@@ -165,7 +166,8 @@ const HeaderInformation = styled.div`
 const HeaderIcons = styled.div``;
 
 const EndOfMessage = styled.div`
-margin-bottom: 50px;`;
+  margin-bottom: 50px;
+`;
 
 const MessageContainer = styled.div`
   padding: 30px;
@@ -192,4 +194,22 @@ const InputContainer = styled.form`
   background-color: white;
   position: sticky;
   z-index: 100;
+`;
+
+const Icon = styled(SendIcon)`
+  background-color: black;
+  border: none;
+  :hover {
+    opacity: 0.8;
+  }
+`;
+
+const ButtonSend = styled.button`
+  border: none;
+  background-color: white;
+  align-self: center;
+  bottom: 0;
+  padding-left: 20px;
+  padding-right: 20px;
+  cursor: pointer;
 `;
