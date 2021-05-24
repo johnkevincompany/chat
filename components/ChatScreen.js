@@ -15,10 +15,12 @@ import getRecipientEmail from "../utils/getRecipientEmail";
 import TimeAgo from "timeago-react";
 import SendIcon from "@material-ui/icons/Send";
 
+
 function ChatScreen({ chat, messages }) {
   const [user] = useAuthState(auth);
   const [input, setInput] = useState("");
   const router = useRouter();
+  const [chosenEmoji, setChosenEmoji] = useState(null);
   const endOfMessagesRef = useRef(null);
   const [messagesSnapshot] = useCollection(
     db
@@ -59,6 +61,7 @@ function ChatScreen({ chat, messages }) {
       block: "start",
     });
   };
+
 
   const sendMessage = (e) => {
     e.preventDefault();
@@ -122,11 +125,14 @@ function ChatScreen({ chat, messages }) {
       </MessageContainer>
 
       <InputContainer>
-        <InsertEmoticonIcon />
+        <IconButton>
+          <InsertEmoticonIcon />
+        </IconButton>
+
         <Input value={input} onChange={(e) => setInput(e.target.value)} />
-        <ButtonSend disabled={!input} type="submit" onClick={sendMessage}>
+        <IconButton disabled={!input} type="submit" onClick={sendMessage}>
           <SendIcon />
-        </ButtonSend>
+        </IconButton>
         <MicIcon />
       </InputContainer>
     </Container>
