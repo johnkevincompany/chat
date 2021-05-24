@@ -1,23 +1,23 @@
-import { Avatar, IconButton, Button } from "@material-ui/core";
-import styled from "styled-components";
-import ChatIcon from "@material-ui/icons/Chat";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
-import SearchIcon from "@material-ui/icons/Search";
-import * as EmailValidator from "email-validator";
-import { auth, db } from "../firebase";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { useCollection } from "react-firebase-hooks/firestore";
-import Chat from "./Chat";
+import { Avatar, IconButton, Button } from '@material-ui/core';
+import styled from 'styled-components';
+import ChatIcon from '@material-ui/icons/Chat';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+import SearchIcon from '@material-ui/icons/Search';
+import * as EmailValidator from 'email-validator';
+import { auth, db } from '../firebase';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { useCollection } from 'react-firebase-hooks/firestore';
+import Chat from './Chat';
 
 function Sidebar() {
   const [user] = useAuthState(auth);
   const userChatRef = db
-    .collection("chats")
-    .where("users", "array-contains", user.email);
+    .collection('chats')
+    .where('users', 'array-contains', user.email);
   const [chatsSnapshot] = useCollection(userChatRef);
 
   const createChat = () => {
-    const input = prompt("Please enter your desired contacts email.");
+    const input = prompt('Please enter your desired contacts email.');
 
     if (!input) return null;
 
@@ -26,7 +26,7 @@ function Sidebar() {
       !chatAlreadyExists(input) &&
       input !== user.email
     ) {
-      db.collection("chats").add({
+      db.collection('chats').add({
         users: [user.email, input],
       });
     }
@@ -35,7 +35,7 @@ function Sidebar() {
   const chatAlreadyExists = (recipientEmail) =>
     !!chatsSnapshot?.docs.find(
       (chat) =>
-        chat.data().users.find((user) => user === recipientEmail)?.lenght > 0
+        chat.data().users.find((user) => user === recipientEmail)?.length > 0
     );
 
   return (
